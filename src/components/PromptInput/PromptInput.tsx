@@ -2388,8 +2388,12 @@ function PromptInput({
       useAppState(s => s.companionReaction !== undefined)
     : false
   const { columns, rows } = useTerminalSize()
+  const companionReserved = companionReservedColumns(columns, companionSpeaking)
   const textInputColumns =
-    columns - 3 - companionReservedColumns(columns, companionSpeaking)
+    columns - 3 - companionReserved
+  // Buddy renders as a row sibling in REPL, consuming horizontal columns.
+  // The PromptInput container width is the remaining space.
+  const promptContainerColumns = Math.max(0, columns - companionReserved)
 
   // POC: click-to-position-cursor. Mouse tracking is only enabled inside
   // <AlternateScreen>, so this is dormant in the normal main-screen REPL.
@@ -2813,7 +2817,7 @@ function PromptInput({
             {swarmBanner.text ? (
               <>
                 {'─'.repeat(
-                  Math.max(0, columns - stringWidth(swarmBanner.text) - 4),
+                  Math.max(0, promptContainerColumns - stringWidth(swarmBanner.text) - 3),
                 )}
                 <Text backgroundColor={swarmBanner.bgColor} color="inverseText">
                   {' '}
@@ -2822,7 +2826,7 @@ function PromptInput({
                 {'──'}
               </>
             ) : (
-              '─'.repeat(columns)
+              '─'.repeat(promptContainerColumns)
             )}
           </Text>
           <Box flexDirection="row" width="100%">
@@ -2836,7 +2840,7 @@ function PromptInput({
               {textInputElement}
             </Box>
           </Box>
-          <Text color={swarmBanner.bgColor}>{'─'.repeat(columns)}</Text>
+          <Text color={swarmBanner.bgColor}>{'─'.repeat(promptContainerColumns + 1)}</Text>
         </>
       ) : (
         <Box
