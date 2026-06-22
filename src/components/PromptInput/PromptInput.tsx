@@ -2472,7 +2472,7 @@ function PromptInput({
           <Text color={swarmBanner.bgColor}>
             {swarmBanner.text ? (
               <>
-                {'─'.repeat(Math.max(0, columns - companionReserved - stringWidth(swarmBanner.text) - 4))}
+                {'─'.repeat(Math.max(0, columns - stringWidth(swarmBanner.text) - 18))}
                 <Text backgroundColor={swarmBanner.bgColor} color="inverseText">
                   {' '}
                   {swarmBanner.text}{' '}
@@ -2494,7 +2494,7 @@ function PromptInput({
               {textInputElement}
             </Box>
           </Box>
-          <Text color={swarmBanner.bgColor}>{'─'.repeat(columns - companionReserved)}</Text>
+          <Text color={swarmBanner.bgColor}>{'─'.repeat(columns - 18 + stringWidth(swarmBanner.text))}</Text>
         </>
       ) : (
         <Box
