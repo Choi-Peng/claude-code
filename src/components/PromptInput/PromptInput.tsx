@@ -2494,7 +2494,7 @@ function PromptInput({
               {textInputElement}
             </Box>
           </Box>
-          <Text color={swarmBanner.bgColor}>{'─'.repeat(columns - 18 + stringWidth(swarmBanner.text))}</Text>
+          <Text color={swarmBanner.bgColor}>{'─'.repeat(columns - 20 + stringWidth(swarmBanner.text))}</Text>
         </>
       ) : (
         <Box
